@@ -6,20 +6,20 @@ main() {
 }
 
 // Cria uma classe 'PerguntaAppState' que gerencia o estado do widget 'PerguntaApp'
-class PerguntaAppState extends State<PerguntaApp> {
-  var perguntaSelecionada = 0; // Variável que armazena o índice da pergunta atual
+class _PerguntaAppState extends State<PerguntaApp> {
+  var _perguntaSelecionada = 0; // Variável que armazena o índice da pergunta atual
 
-  void responder() {
+  void _responder() {
     setState(() {
-      perguntaSelecionada++; // Incrementa o valor da variável 'perguntaSelecionada' ao chamar 'responder'
+      _perguntaSelecionada++; // Incrementa o valor da variável '_perguntaSelecionada' ao chamar 'responder'
     });
-    print(perguntaSelecionada); // Imprime o valor atualizado de 'perguntaSelecionada' no console
+    print(_perguntaSelecionada); // Imprime o valor atualizado de '_perguntaSelecionada' no console
   }
 
   @override
   Widget build(BuildContext context) { // O método build é obrigatório em um StatelessWidget, e é onde a interface do widget é definida
     final List<String> perguntas = [  // Declara uma lista de strings chamada 'perguntas'
-      'Qual sua cor favorita?',
+      'Qual sua cor favorita?',  
       'Qual é o seu animal favorito'
     ];
 
@@ -30,20 +30,20 @@ class PerguntaAppState extends State<PerguntaApp> {
         ),
         body: Column( // Column é um widget que organiza seus filhos em uma coluna vertical
           children: <Widget>[
-            Text(perguntas[perguntaSelecionada]),  // Exibe o primeiro item da lista 'perguntas'
+            Text(perguntas[_perguntaSelecionada]),  // Exibe o primeiro item da lista 'perguntas'
 
             // Cria três botões elevados, cada um com um texto diferente
             ElevatedButton(
               child: Text('Resposta 1'),
-              onPressed: responder, // passa a função 'responder' como parâmetro
+              onPressed: _responder, // passa a função '_responder' como parâmetro
             ),
             ElevatedButton(
               child: Text('Resposta 2'),
-              onPressed: responder, 
+              onPressed: _responder, 
             ),
             ElevatedButton(
               child: Text('Resposta 3'),
-              onPressed: responder, 
+              onPressed: _responder, 
             ),
           ],
         ),
@@ -56,8 +56,8 @@ class PerguntaAppState extends State<PerguntaApp> {
 class PerguntaApp extends StatefulWidget {
 
   @override
-  PerguntaAppState createState() {
-    return PerguntaAppState(); // Retorna uma nova instância da classe de estado associada a 'PerguntaApp'
+  _PerguntaAppState createState() {
+    return _PerguntaAppState(); // Retorna uma nova instância da classe de estado associada a 'PerguntaApp'
   }
 }
 
