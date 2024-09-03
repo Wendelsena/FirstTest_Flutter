@@ -20,9 +20,20 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
   @override
   Widget build(BuildContext context) { // O método build é obrigatório em um StatelessWidget, e é onde a interface do widget é definida
-    final List<String> perguntas = [  // Declara uma lista de strings chamada 'perguntas'
-      'Qual sua cor favorita?',  
-      'Qual é o seu animal favorito'
+    final perguntas = [  // Declara uma lista de strings chamada 'perguntas'
+      {
+        'texto' : 'Qual é sua cor favorita?', 
+        'respostas' : ['Azul', 'Vermelho', 'Preto', 'Branco',],
+      },
+      {
+        'texto' : 'Qual é seu jogo favorita?', 
+        'respostas' : ['Red Dead 2', 'GTA 5', 'The Witcher 3', 'Dark Souls'],
+      },
+      {
+        'texto' : 'Qual é seu anime favorito?', 
+        'respostas' : ['One Piece', 'Naruto Shippuden', 'Cowboy Bebop', 'Jujutsu Kaisen',]
+      },
+    
     ];
 
     return new MaterialApp(  // Retorna o widget MaterialApp, que é o widget raiz da sua aplicação
@@ -32,7 +43,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
         ),
         body: Column( // Column é um widget que organiza seus filhos em uma coluna vertical
           children: <Widget>[
-            Questao(perguntas[_perguntaSelecionada]),  // Exibe o primeiro item da lista 'perguntas'
+            Questao(perguntas[_perguntaSelecionada]['texto'] as String),
             Resposta('Resposta 1', _responder), // Cria três botões elevados, cada um com um texto diferente
             Resposta('Resposta 2', _responder),
             Resposta('Resposta 3', _responder),
