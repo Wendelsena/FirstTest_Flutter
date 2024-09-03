@@ -8,6 +8,14 @@ Questao(this.texto);
 
   @override
   Widget build(BuildContext context) {
-    return Text(texto);  // Exibe o primeiro item da lista 'perguntas'
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.all(10),
+      child: Text( // Exibe o primeiro item da lista 'perguntas'
+        texto,
+        style: TextStyle(fontSize: 28),
+        textAlign: TextAlign.center,
+      ),
+    );  
   }
 }
