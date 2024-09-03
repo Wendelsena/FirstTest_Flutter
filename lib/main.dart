@@ -1,3 +1,4 @@
+import 'package:first_test_flutter/questao.dart';
 import 'package:flutter/material.dart';
 
 // Função principal que inicia a aplicação
@@ -30,7 +31,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
         ),
         body: Column( // Column é um widget que organiza seus filhos em uma coluna vertical
           children: <Widget>[
-            Text(perguntas[_perguntaSelecionada]),  // Exibe o primeiro item da lista 'perguntas'
+            Questao(perguntas[_perguntaSelecionada]),  // Exibe o primeiro item da lista 'perguntas'
 
             // Cria três botões elevados, cada um com um texto diferente
             ElevatedButton(
