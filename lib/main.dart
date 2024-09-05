@@ -9,18 +9,8 @@ main() {
 
 // Cria uma classe 'PerguntaAppState' que gerencia o estado do widget 'PerguntaApp'
 class _PerguntaAppState extends State<PerguntaApp> {
-  var _perguntaSelecionada = 0; // Variável que armazena o índice da pergunta atual
-
-  void _responder() {
-    setState(() {
-      _perguntaSelecionada++; // Incrementa o valor da variável '_perguntaSelecionada' ao chamar 'responder'
-    });
-    print(_perguntaSelecionada); // Imprime o valor atualizado de '_perguntaSelecionada' no console
-  }
-
-  @override
-  Widget build(BuildContext context) { // O método build é obrigatório em um StatelessWidget, e é onde a interface do widget é definida
-    final perguntas = [  // Declara uma lista de strings chamada 'perguntas'
+  var _perguntaSelecionada = 0; // Variável que armazena o índice da pergunta atual.
+  final _perguntas = const [  // Declara uma lista de strings chamada 'perguntas'
       {
         'texto' : 'Qual é sua cor favorita?', 
         'respostas' : ['Azul', 'Vermelho', 'Preto', 'Branco',],
@@ -33,10 +23,24 @@ class _PerguntaAppState extends State<PerguntaApp> {
         'texto' : 'Qual é seu anime favorito?', 
         'respostas' : ['One Piece', 'Naruto Shippuden', 'Cowboy Bebop', 'Jujutsu Kaisen',]
       },
-    
     ];
 
-    List<String> respostas = perguntas[_perguntaSelecionada]['respostas'] as List<String>;
+  void _responder() {
+    if (temPerguntaSelecionada) {
+      setState(() {
+      _perguntaSelecionada++; // Incrementa o valor da variável '_perguntaSelecionada' ao chamar 'responder'
+      });
+    }
+  }
+
+bool get temPerguntaSelecionada {
+  return _perguntaSelecionada < _perguntas.length; // se pergunta for maior que tamanho da lista
+}
+  @override
+  Widget build(BuildContext context) { // O método build é obrigatório em um StatelessWidget, e é onde a interface do widget é definida
+
+    List<String> respostas = temPerguntaSelecionada 
+    ? _perguntas[_perguntaSelecionada]['respostas'] as List<String> : [];
     // Declara uma lista de strings 'respostas', pegando o valor da chave 'respostas' do mapa 'perguntas'.
     // O 'as List<String>' garante que o Dart saiba que esse valor é uma lista de strings.
 
@@ -64,15 +68,15 @@ class _PerguntaAppState extends State<PerguntaApp> {
         appBar: AppBar( // AppBar é a barra de título no topo da tela
           title: Text('Perguntas'), 
         ),
-        body: Column( // Column é um widget que organiza seus filhos em uma coluna vertical
+        body: temPerguntaSelecionada ? Column( // Column é um widget que organiza seus filhos em uma coluna vertical
           children: <Widget>[  // Adiciona a pergunta como um widget no layout.
-            Questao(perguntas[_perguntaSelecionada]['texto'] as String),
+            Questao(_perguntas[_perguntaSelecionada]['texto'] as String),
             ...widgets,
              /* O '...respostas' é o operador spread, que pega cada item da lista 'respostas' 
                 e os insere individualmente na lista de widgets da Column.
                 Assim, cada botão de resposta será adicionado dinamicamente de acordo com a pergunta selecionada. */
           ],
-        ),
+        ) : null,
       ),
     );
   }
