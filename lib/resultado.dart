@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class Resultado extends StatelessWidget {
   
   final int nota;
+  final void Function() quandoReiniciarQuestionario;
 
-  Resultado(this.nota);
+  Resultado(this.nota, this.quandoReiniciarQuestionario);
 
   String get fraseResultado {
     if (nota < 50) { 
@@ -14,17 +15,29 @@ class Resultado extends StatelessWidget {
       (Dica: Só errou uma)''';
     } else {
       return '''Parabéns, gatinho! Arrasou! Estou muito orgulhoso de você. 
-      Continue assim, você é incrível e merece todo o sucesso do mundo!''';
+      Continue assim, você é incrível e merece todo o sucesso do mundo! Te amo.''';
     }
   } 
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Parabéns!',
-        style: TextStyle(fontSize: 28),
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: Text(
+            fraseResultado,
+            style: TextStyle(fontSize: 28),
+          ),
+        ),
+        TextButton(
+          child: Text('Continuar Tentando?'),
+          style: TextButton.styleFrom(
+          foregroundColor: Colors.blue, // cor de fundo
+          ),
+          onPressed: quandoReiniciarQuestionario,
+        )
+      ],
     );
   }
 }
