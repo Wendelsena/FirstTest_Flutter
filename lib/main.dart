@@ -76,7 +76,12 @@ bool get temPerguntaSelecionada {
                 e os insere individualmente na lista de widgets da Column.
                 Assim, cada botão de resposta será adicionado dinamicamente de acordo com a pergunta selecionada. */
           ],
-        ) : null,
+        ) : Center(
+          child:  Text(
+            "Parabéns!",
+            style: TextStyle(fontSize: 28),
+          ),
+        ),
       ),
     );
   }
