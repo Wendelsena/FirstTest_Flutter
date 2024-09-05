@@ -36,18 +36,27 @@ class _PerguntaAppState extends State<PerguntaApp> {
     
     ];
 
+    List<String> respostas = perguntas[_perguntaSelecionada]['respostas'] as List<String>;
+    // Declara uma lista de strings 'respostas', pegando o valor da chave 'respostas' do mapa 'perguntas'.
+    // O 'as List<String>' garante que o Dart saiba que esse valor é uma lista de strings.
 
-    List<Widget> widgets= []; 
+    List<Widget> widgets = respostas.map((t) => Resposta(t, _responder)).toList();
+    // O método 'map' itera sobre a lista de respostas e cria um widget 'Resposta' para cada item (t).
+    // A função 'map' retorna um Iterable, então usamos '.toList()' para convertê-lo em uma lista de widgets.
+
+
+
     // Inicializa uma lista de Widgets chamada 'respostas' que irá armazenar os botões de resposta.
-    for (String textoRespo in perguntas[_perguntaSelecionada]['respostas'] as List<String>) { 
+    // for (String textoRespo in perguntas[_perguntaSelecionada]['respostas'] as List<String>) { 
     /* O for itera sobre a lista 'respostas' do mapa 'perguntas'. 
     O 'as List<String>' garante que o Dart saiba que 'respostas' é uma lista de strings. 
     Para cada item na lista de respostas, será criada uma variável 'textoRespo', 
     que representa cada resposta individualmente (ex: "Azul", "Vermelho", etc.). */
-    widgets.add(Resposta(textoRespo, _responder)); 
+    //widgets.add(Resposta(textoRespo, _responder)); 
     /* Adiciona um widget Resposta para cada resposta na lista, 
-    passando o texto da resposta e a função '_responder' para tratar o clique. */
-}
+    passando o texto da resposta e a função '_responder' para tratar o clique. */ 
+    // }
+
 
 
     return new MaterialApp(  // Retorna o widget MaterialApp, que é o widget raiz da sua aplicação
