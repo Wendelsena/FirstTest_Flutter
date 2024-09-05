@@ -99,7 +99,7 @@ bool get temPerguntaSelecionada {
         ? Questionario(perguntas: _perguntas, 
                        perguntaSelecionada: _perguntaSelecionada, 
                        quandoResponder: _responder)
-         : Resultado(),
+         : Resultado(_notaTotal),
       ),
     );
   }
