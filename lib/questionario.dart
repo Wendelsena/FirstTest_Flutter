@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 class Questionario extends StatelessWidget {
   final List<Map<String, Object>> perguntas;
   final int perguntaSelecionada;
-  final void Function() responder;
+  final void Function(int) quandoResponder;
 
   Questionario({
     required this.perguntas,
     required this.perguntaSelecionada,
-    required this.responder
+    required this.quandoResponder,
   });
 
   bool get temPerguntaSelecionada {
@@ -25,7 +25,26 @@ class Questionario extends StatelessWidget {
     ? perguntas[perguntaSelecionada]['respostas'] as List<Map<String, Object>> : [];
     // Declara uma lista de strings 'respostas', pegando o valor da chave 'respostas' do mapa 'perguntas'.
     // O 'as List<String>' garante que o Dart saiba que esse valor é uma lista de strings.
-     List<Widget> widgets = respostas.map((resp) => Resposta(resp['texto'] as String, responder)).toList();
+
+
+
+     List<Widget> widgets = respostas.map((resp) { 
+        // 'respostas' é uma lista de mapas, onde cada mapa contém uma resposta e uma pontuação.
+        // O 'map' itera sobre a lista de respostas, aplicando a função a seguir a cada item da lista (resp).
+        return Resposta(
+          resp['texto'].toString(), 
+          // Para cada item 'resp', pega o valor da chave 'texto' e o converte para uma string.
+          // Esse valor será exibido no botão da resposta.
+
+          () => quandoResponder(int.parse(resp['pontuacao'].toString())), 
+          // Define uma função anônima para ser chamada ao clicar no botão de resposta.
+          // A função chama 'quandoResponder' passando a pontuação associada à resposta.
+          // A pontuação é convertida de String para int usando 'int.parse()'.
+        );
+      }).toList();  // 'toList()' converte o resultado do map, que é um Iterable, para uma lista de widgets.
+
+
+
     // O método 'map' itera sobre a lista de respostas e cria um widget 'Resposta' para cada item (t).
     // A função 'map' retorna um Iterable, então usamos '.toList()' para convertê-lo em uma lista de widgets.
 

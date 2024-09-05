@@ -11,6 +11,7 @@ main() {
 // Cria uma classe 'PerguntaAppState' que gerencia o estado do widget 'PerguntaApp'
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0; // Variável que armazena o índice da pergunta atual.
+  var _notaTotal = 0;
   final _perguntas = const [  // Declara uma lista de strings chamada 'perguntas'
       {
         'texto' : 'Se eu, seu amor, fosse uma comida, qual eu seria?',
@@ -50,19 +51,20 @@ class _PerguntaAppState extends State<PerguntaApp> {
       },
           {
       'texto' : 'Se a gente fosse viajar agora, qual seria o destino perfeito?',
-      'respostas' : [
-        {'texto' : 'Paris, a cidade do amor, ulala', 'nota' : 10},
-        {'texto' : 'Ilhas Maldivas, só nós dois e o mar eitaporra.', 'nota' : 10},
-        {'texto' : 'co-com certeza Tóquio, we-wendelru-sama.', 'nota' : 10},
-        {'texto' : 'Pintópolis - MG.', 'nota' : 10},
-       ],
-     },
-   ];
+        'respostas' : [
+          {'texto' : 'Paris, a cidade do amor, ulala', 'nota' : 10},
+          {'texto' : 'Ilhas Maldivas, só nós dois e o mar eitaporra.', 'nota' : 10},
+          {'texto' : 'co-com certeza Tóquio, we-wendelru-sama.', 'nota' : 10},
+          {'texto' : 'Pintópolis - MG.', 'nota' : 10},
+        ],
+      },
+    ];
 
-  void _responder() {
+  void _responder(int nota) {
     if (temPerguntaSelecionada) {
       setState(() {
       _perguntaSelecionada++; // Incrementa o valor da variável '_perguntaSelecionada' ao chamar 'responder'
+      _notaTotal += nota;
       });
     }
   }
@@ -96,7 +98,7 @@ bool get temPerguntaSelecionada {
         body: temPerguntaSelecionada 
         ? Questionario(perguntas: _perguntas, 
                        perguntaSelecionada: _perguntaSelecionada, 
-                       responder: _responder)
+                       quandoResponder: _responder)
          : Resultado(),
       ),
     );
