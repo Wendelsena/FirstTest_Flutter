@@ -36,17 +36,32 @@ class _PerguntaAppState extends State<PerguntaApp> {
     
     ];
 
+
+    List<Widget> widgets= []; 
+    // Inicializa uma lista de Widgets chamada 'respostas' que irá armazenar os botões de resposta.
+    for (String textoRespo in perguntas[_perguntaSelecionada]['respostas'] as List<String>) { 
+    /* O for itera sobre a lista 'respostas' do mapa 'perguntas'. 
+    O 'as List<String>' garante que o Dart saiba que 'respostas' é uma lista de strings. 
+    Para cada item na lista de respostas, será criada uma variável 'textoRespo', 
+    que representa cada resposta individualmente (ex: "Azul", "Vermelho", etc.). */
+    widgets.add(Resposta(textoRespo, _responder)); 
+    /* Adiciona um widget Resposta para cada resposta na lista, 
+    passando o texto da resposta e a função '_responder' para tratar o clique. */
+}
+
+
     return new MaterialApp(  // Retorna o widget MaterialApp, que é o widget raiz da sua aplicação
       home: Scaffold( // Scaffold fornece uma estrutura visual básica, como AppBar, Drawer, BottomNavigationBar, etc.
         appBar: AppBar( // AppBar é a barra de título no topo da tela
           title: Text('Perguntas'), 
         ),
         body: Column( // Column é um widget que organiza seus filhos em uma coluna vertical
-          children: <Widget>[
+          children: <Widget>[  // Adiciona a pergunta como um widget no layout.
             Questao(perguntas[_perguntaSelecionada]['texto'] as String),
-            Resposta('Resposta 1', _responder), // Cria três botões elevados, cada um com um texto diferente
-            Resposta('Resposta 2', _responder),
-            Resposta('Resposta 3', _responder),
+            ...widgets,
+             /* O '...respostas' é o operador spread, que pega cada item da lista 'respostas' 
+                e os insere individualmente na lista de widgets da Column.
+                Assim, cada botão de resposta será adicionado dinamicamente de acordo com a pergunta selecionada. */
           ],
         ),
       ),
