@@ -1,5 +1,6 @@
 import 'package:first_test_flutter/questao.dart';
 import 'package:first_test_flutter/resposta.dart';
+import 'package:first_test_flutter/resultado.dart';
 import 'package:flutter/material.dart';
 
 // Função principal que inicia a aplicação
@@ -76,12 +77,7 @@ bool get temPerguntaSelecionada {
                 e os insere individualmente na lista de widgets da Column.
                 Assim, cada botão de resposta será adicionado dinamicamente de acordo com a pergunta selecionada. */
           ],
-        ) : Center(
-          child:  Text(
-            "Parabéns!",
-            style: TextStyle(fontSize: 28),
-          ),
-        ),
+        ) : Resultado(),
       ),
     );
   }
