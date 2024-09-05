@@ -1,5 +1,5 @@
-import 'package:first_test_flutter/questao.dart';
-import 'package:first_test_flutter/resposta.dart';
+
+import 'package:first_test_flutter/questionario.dart';
 import 'package:first_test_flutter/resultado.dart';
 import 'package:flutter/material.dart';
 
@@ -13,18 +13,51 @@ class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0; // Variável que armazena o índice da pergunta atual.
   final _perguntas = const [  // Declara uma lista de strings chamada 'perguntas'
       {
-        'texto' : 'Qual é sua cor favorita?', 
-        'respostas' : ['Azul', 'Vermelho', 'Preto', 'Branco',],
+        'texto' : 'Se eu, seu amor, fosse uma comida, qual eu seria?',
+        'respostas' : [
+          {'texto' : 'Pizza de calabresa, porque você é uma delícia', 'nota' : 10},
+          {'texto' : 'Lasanha, bipolar de várias camadas.', 'nota' : 10},
+          {'texto' : 'Chocolate branco, doce causador de diabetes (meu favorido).', 'nota' : 10},
+          {'texto' : 'Brócolis... mas só pra você ser saudável (S2).', 'nota' : 10},
+        ],
       },
       {
-        'texto' : 'Qual é seu jogo favorita?', 
-        'respostas' : ['Red Dead 2', 'GTA 5', 'The Witcher 3', 'Dark Souls'],
+        'texto' : 'Se você pudesse escolher, qual seria seu superpoder?',
+        'respostas' : [
+          {'texto' : 'Invisibilidade, porque sou ciúmento, paranóico com dependência emocional.', 'nota' : 10},
+          {'texto' : 'Voar, pra fugir de mim :(', 'nota' : 0},
+          {'texto' : 'Teletransporte, pra estar sempre pertinho do seu amor (eu).', 'nota' : 10},
+          {'texto' : 'Força sobre-humana, pra aguentar meu humor insuportával.', 'nota' : 10},
+        ],
       },
       {
-        'texto' : 'Qual é seu anime favorito?', 
-        'respostas' : ['One Piece', 'Naruto Shippuden', 'Cowboy Bebop', 'Jujutsu Kaisen',]
+        'texto' : 'Se eu fosse um filme, qual seria o gênero?',
+        'respostas' : [
+          {'texto' : 'Comédia romântica, porque sou um charme (usando o app pra infliar meu ego).', 'nota' : 10},
+          {'texto' : 'Ação (vir me ver na Cidade Nova não é facíl).', 'nota' : 10},
+          {'texto' : 'Drama, porque às vezes eu sou dramático e insuportavél (desculpa).', 'nota' : 10},
+          {'texto' : 'Ficção científica, nosso amor é de outro mundo gata!', 'nota' : 10},
+        ],
       },
-    ];
+      {
+        'texto' : 'O que você mais ama quando estamos juntos? (Quero sinceridade nessa)',
+        'respostas' : [
+          {'texto' : 'Quando pedimos temake pra comer.', 'nota' : 10},
+          {'texto' : 'Quando a gente vai em japa encher o buxo.', 'nota' : 10},
+          {'texto' : 'Quando a gente come sushi', 'nota' : 10},
+          {'texto' : 'Tudo, não consigo escolher só uma coisa!', 'nota' : 10},
+        ],
+      },
+          {
+      'texto' : 'Se a gente fosse viajar agora, qual seria o destino perfeito?',
+      'respostas' : [
+        {'texto' : 'Paris, a cidade do amor, ulala', 'nota' : 10},
+        {'texto' : 'Ilhas Maldivas, só nós dois e o mar eitaporra.', 'nota' : 10},
+        {'texto' : 'co-com certeza Tóquio, we-wendelru-sama.', 'nota' : 10},
+        {'texto' : 'Pintópolis - MG.', 'nota' : 10},
+       ],
+     },
+   ];
 
   void _responder() {
     if (temPerguntaSelecionada) {
@@ -39,15 +72,6 @@ bool get temPerguntaSelecionada {
 }
   @override
   Widget build(BuildContext context) { // O método build é obrigatório em um StatelessWidget, e é onde a interface do widget é definida
-
-    List<String> respostas = temPerguntaSelecionada 
-    ? _perguntas[_perguntaSelecionada]['respostas'] as List<String> : [];
-    // Declara uma lista de strings 'respostas', pegando o valor da chave 'respostas' do mapa 'perguntas'.
-    // O 'as List<String>' garante que o Dart saiba que esse valor é uma lista de strings.
-
-    List<Widget> widgets = respostas.map((t) => Resposta(t, _responder)).toList();
-    // O método 'map' itera sobre a lista de respostas e cria um widget 'Resposta' para cada item (t).
-    // A função 'map' retorna um Iterable, então usamos '.toList()' para convertê-lo em uma lista de widgets.
 
 
 
@@ -69,15 +93,11 @@ bool get temPerguntaSelecionada {
         appBar: AppBar( // AppBar é a barra de título no topo da tela
           title: Text('Perguntas'), 
         ),
-        body: temPerguntaSelecionada ? Column( // Column é um widget que organiza seus filhos em uma coluna vertical
-          children: <Widget>[  // Adiciona a pergunta como um widget no layout.
-            Questao(_perguntas[_perguntaSelecionada]['texto'] as String),
-            ...widgets,
-             /* O '...respostas' é o operador spread, que pega cada item da lista 'respostas' 
-                e os insere individualmente na lista de widgets da Column.
-                Assim, cada botão de resposta será adicionado dinamicamente de acordo com a pergunta selecionada. */
-          ],
-        ) : Resultado(),
+        body: temPerguntaSelecionada 
+        ? Questionario(perguntas: _perguntas, 
+                       perguntaSelecionada: _perguntaSelecionada, 
+                       responder: _responder)
+         : Resultado(),
       ),
     );
   }
