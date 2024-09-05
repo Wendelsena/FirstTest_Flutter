@@ -18,7 +18,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
         'respostas' : [
           {'texto' : 'Pizza de calabresa, porque você é uma delícia', 'nota' : 10},
           {'texto' : 'Lasanha, bipolar de várias camadas.', 'nota' : 10},
-          {'texto' : 'Chocolate branco, doce causador de diabetes (meu favorido).', 'nota' : 10},
+          {'texto' : 'Chocolate branco, doce, causador de diabetes (meu favorido).', 'nota' : 10},
           {'texto' : 'Brócolis... mas só pra você ser saudável (S2).', 'nota' : 10},
         ],
       },
@@ -96,19 +96,35 @@ bool get temPerguntaSelecionada {
     // }
 
 
-
-    return new MaterialApp(  // Retorna o widget MaterialApp, que é o widget raiz da sua aplicação
-      home: Scaffold( // Scaffold fornece uma estrutura visual básica, como AppBar, Drawer, BottomNavigationBar, etc.
-        appBar: AppBar( // AppBar é a barra de título no topo da tela
-          title: Text('Perguntas'), 
+      return MaterialApp(  // Retorna o widget MaterialApp, que é o widget raiz da sua aplicação
+        home: Scaffold( // Scaffold fornece uma estrutura visual básica, como AppBar, Drawer, BottomNavigationBar, etc.
+          appBar: AppBar( // AppBar é a barra de título no topo da tela
+            title: Center(
+              child: Text(
+                'Questionario do Fefe',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold, // Aplica negrito ao texto
+                  fontSize: 20, // Ajuste o tamanho da fonte conforme necessário
+                ),
+              ),
+            ),
+            backgroundColor: const Color.fromARGB(255, 223, 183, 123), // Define a cor de fundo da AppBar.
+            elevation: 10, // Adiciona sombra ao AppBar
+          ),
+          backgroundColor: const Color(0xFFFFFAF0), // Define a cor de fundo do Scaffold
+          body: temPerguntaSelecionada 
+            ? Questionario(
+                perguntas: _perguntas, 
+                perguntaSelecionada: _perguntaSelecionada, 
+                quandoResponder: _responder,
+              )
+            : Resultado(
+                _notaTotal, 
+                _reiniciarQuestionario,
+              ),
         ),
-        body: temPerguntaSelecionada 
-        ? Questionario(perguntas: _perguntas, 
-                       perguntaSelecionada: _perguntaSelecionada, 
-                       quandoResponder: _responder)
-         : Resultado(_notaTotal, _reiniciarQuestionario),
-      ),
-    );
+      );
+
   }
 }
 

@@ -28,20 +28,27 @@ class Questionario extends StatelessWidget {
 
 
 
-     List<Widget> widgets = respostas.map((resp) { 
-        // 'respostas' é uma lista de mapas, onde cada mapa contém uma resposta e uma pontuação.
-        // O 'map' itera sobre a lista de respostas, aplicando a função a seguir a cada item da lista (resp).
-        return Resposta(
-          resp['texto'].toString(), 
-          // Para cada item 'resp', pega o valor da chave 'texto' e o converte para uma string.
-          // Esse valor será exibido no botão da resposta.
+     List<Widget> widgets = respostas.map((resp) {
+      // 'respostas' é uma lista de mapas, onde cada mapa contém uma resposta e uma pontuação.
+      
+      final texto = resp['texto']?.toString() ?? 'Resposta desconhecida';
+      // Obtém o valor da chave 'texto' e o converte para uma string.
+      // Se 'texto' for null, usa um valor padrão 'Resposta desconhecida'.
 
-          () => quandoResponder(int.parse(resp['pontuacao'].toString())), 
-          // Define uma função anônima para ser chamada ao clicar no botão de resposta.
-          // A função chama 'quandoResponder' passando a pontuação associada à resposta.
-          // A pontuação é convertida de String para int usando 'int.parse()'.
-        );
-      }).toList();  // 'toList()' converte o resultado do map, que é um Iterable, para uma lista de widgets.
+      final pontuacaoStr = resp['pontuacao']?.toString();
+      // Obtém o valor da chave 'pontuacao' e o converte para uma string, se possível.
+
+      final pontuacao = int.tryParse(pontuacaoStr ?? '');
+      // Tenta converter a string 'pontuacaoStr' para um inteiro.
+      // Se a conversão falhar, 'pontuacao' será null.
+
+      return Resposta(
+        texto, 
+        // Passa o texto para o widget Resposta.
+        () => quandoResponder(pontuacao ?? 0), 
+        // Passa a pontuação para a função 'quandoResponder', ou 0 se a conversão falhar.
+      );
+    }).toList(); // 'toList()' converte o resultado do map, que é um Iterable, para uma lista de widgets.
 
 
 

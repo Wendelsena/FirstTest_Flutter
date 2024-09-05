@@ -9,13 +9,23 @@ class Resposta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      width: 300, // Largura fixa do Container
+      padding: EdgeInsets.symmetric(vertical: 8.0), // Padding vertical para espaçar os botões
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white, // cor de texto
-          backgroundColor: Colors.blue, // cor de fundo
+          backgroundColor: const Color.fromARGB(255, 223, 183, 123), // Cor de fundo
+          foregroundColor: Colors.black, // Cor do texto
+          elevation: 5, // Sombra do botão
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0), // Padding interno do botão
         ),
-        child: Text(texto),
+        child: Text(
+          texto,
+          style: TextStyle(
+            fontSize: 18, // Tamanho da fonte
+            fontWeight: FontWeight.bold, // Negrito para destacar o texto
+          ),
+          textAlign: TextAlign.center, // Alinha o texto ao centro
+        ),
         onPressed: quandoSelecionado, 
       ),
     );
