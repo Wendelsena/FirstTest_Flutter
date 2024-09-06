@@ -1,139 +1,195 @@
-
-import 'package:first_test_flutter/questionario.dart';
-import 'package:first_test_flutter/resultado.dart';
 import 'package:flutter/material.dart';
+import 'questionario.dart'; // Importa o widget Questionario
+import 'resultado.dart';   // Importa o widget Resultado
 
-// Função principal que inicia a aplicação
-main() {
-  runApp(new PerguntaApp()); // Chama a função runApp e passa o widget 'PerguntaApp' como argumento
+void main() {
+  runApp(PerguntaApp()); // Inicializa o aplicativo com o widget PerguntaApp
 }
 
-// Cria uma classe 'PerguntaAppState' que gerencia o estado do widget 'PerguntaApp'
-class _PerguntaAppState extends State<PerguntaApp> {
-  var _perguntaSelecionada = 0; // Variável que armazena o índice da pergunta atual.
-  var _notaTotal = 0;
-  final _perguntas = const [  // Declara uma lista de strings chamada 'perguntas'
-      {
-        'texto' : 'Se eu, seu amor, fosse uma comida, qual eu seria?',
-        'respostas' : [
-          {'texto' : 'Pizza de calabresa, porque você é uma delícia', 'nota' : 10},
-          {'texto' : 'Lasanha, bipolar de várias camadas.', 'nota' : 10},
-          {'texto' : 'Chocolate branco, doce, causador de diabetes (meu favorido).', 'nota' : 10},
-          {'texto' : 'Brócolis... mas só pra você ser saudável (S2).', 'nota' : 10},
-        ],
-      },
-      {
-        'texto' : 'Se você pudesse escolher, qual seria seu superpoder?',
-        'respostas' : [
-          {'texto' : 'Invisibilidade, porque sou ciúmento, paranóico com dependência emocional.', 'nota' : 10},
-          {'texto' : 'Voar, pra fugir de mim :(', 'nota' : 0},
-          {'texto' : 'Teletransporte, pra estar sempre pertinho do seu amor (eu).', 'nota' : 10},
-          {'texto' : 'Força sobre-humana, pra aguentar meu humor insuportával.', 'nota' : 10},
-        ],
-      },
-      {
-        'texto' : 'Se eu fosse um filme, qual seria o gênero?',
-        'respostas' : [
-          {'texto' : 'Comédia romântica, porque sou um charme (usando o app pra infliar meu ego).', 'nota' : 10},
-          {'texto' : 'Ação (vir me ver na Cidade Nova não é facíl).', 'nota' : 10},
-          {'texto' : 'Drama, porque às vezes eu sou dramático e insuportavél (desculpa).', 'nota' : 10},
-          {'texto' : 'Ficção científica, nosso amor é de outro mundo gata!', 'nota' : 10},
-        ],
-      },
-      {
-        'texto' : 'O que você mais ama quando estamos juntos? (Quero sinceridade nessa)',
-        'respostas' : [
-          {'texto' : 'Quando pedimos temake pra comer.', 'nota' : 10},
-          {'texto' : 'Quando a gente vai em japa encher o buxo.', 'nota' : 10},
-          {'texto' : 'Quando a gente come sushi', 'nota' : 10},
-          {'texto' : 'Tudo, não consigo escolher só uma coisa!', 'nota' : 10},
-        ],
-      },
-          {
-      'texto' : 'Se a gente fosse viajar agora, qual seria o destino perfeito?',
-        'respostas' : [
-          {'texto' : 'Paris, a cidade do amor, ulala', 'nota' : 10},
-          {'texto' : 'Ilhas Maldivas, só nós dois e o mar eitaporra.', 'nota' : 10},
-          {'texto' : 'co-com certeza Tóquio, we-wendelru-sama.', 'nota' : 10},
-          {'texto' : 'Pintópolis - MG.', 'nota' : 10},
-        ],
-      },
-    ];
+class PerguntaApp extends StatefulWidget {
+  @override
+  _PerguntaAppState createState() => _PerguntaAppState(); // Cria o estado para PerguntaApp
+}
 
+class _PerguntaAppState extends State<PerguntaApp> {
+  var _perguntaSelecionada = 0; // Índice da pergunta atual
+  var _notaTotal = 0; // Pontuação total do questionário
+  bool _temaEscuro = false; // Estado do tema (claro ou escuro)
+  bool _questionarioIniciado = false; // Se o questionário foi iniciado ou não
+
+  final _perguntas = const [ // Lista de perguntas e respostas do questionário
+    {
+      'texto': 'Se eu, seu amor, fosse uma comida, qual eu seria? 1/5',
+      'respostas': [
+        {'texto': 'Brócolis... mas só pra você ser saudável (S2).', 'nota': 10},
+        {'texto': 'Pizza de calabresa, porque eu sou uma delícia', 'nota': 10},
+        {'texto': 'Lasanha, gostosa, mas de várias camadas. Bipolar. Tendências psicopaticas.', 'nota': 10},
+        {'texto': 'Chocolate branco, doce, causador de diabetes e obesidade infantil.', 'nota': 10},
+      ],
+    },
+    {
+      'texto': 'Se você pudesse escolher, qual seria seu superpoder? 2/5',
+      'respostas': [
+        {'texto': 'Invisibilidade, porque sou ciúmento e estou ameaçando você e sua família (Clique aqui se estiver precisando de ajuda).', 'nota': 10},
+        {'texto': 'Voar, só pra fugir de mim :(', 'nota': 0},
+        {'texto': 'Teletransporte, pra estar sempre pertinho do seu amor (eu).', 'nota': 10},
+        {'texto': 'Força sobre-humana, pra aguentar meu senso de humor insuportável.', 'nota': 10},
+      ],
+    },
+    {
+      'texto': 'Se eu fosse um filme, qual seria o gênero? 3/5',
+      'respostas': [
+        {'texto': 'Comédia romântica, porque sou um charme (usando o app pra inflar meu ego).', 'nota': 10},
+        {'texto': 'Ação (vir me ver na Cidade Nova não é fácil).', 'nota': 10},
+        {'texto': 'Drama, porque às vezes eu sou dramático e insuportável (desculpa).', 'nota': 10},
+        {'texto': 'Ficção científica, nosso amor é de outro mundo gata!', 'nota': 10},
+      ],
+    },
+    {
+      'texto': 'O que você mais ama quando estamos juntos? (Quero sinceridade nessa) 4/5',
+      'respostas': [
+        {'texto': 'Quando pedimos temake pra comer.', 'nota': 10},
+        {'texto': 'Quando a gente vai em restaurante japa encher o buxo.', 'nota': 10},
+        {'texto': 'Quando a gente come sushi', 'nota': 10},
+        {'texto': 'Tudo, não consigo escolher só uma coisa!', 'nota': 10},
+      ],
+    },
+    {
+      'texto': 'Se a gente fosse viajar agora, qual seria o destino perfeito? 5/5',
+      'respostas': [
+        {'texto': 'Paris, a cidade do amor, ulala', 'nota': 10},
+        {'texto': 'Ilhas Maldivas, só nós dois e o mar eitaporra.', 'nota': 10},
+        {'texto': 'Co-com certeza Tóquio, we-wendelru-sama >///<.', 'nota': 10},
+        {'texto': 'Pintópolis - MG.', 'nota': 10},
+      ],
+    },
+  ];
+
+  // Método para responder a uma pergunta e avançar para a próxima
   void _responder(int nota) {
-    if (temPerguntaSelecionada) {
+    setState(() {
+      _notaTotal += nota; // Adiciona a nota da resposta à pontuação total
+      _perguntaSelecionada++; // Avança para a próxima pergunta
+    });
+  }
+
+  // Método para reiniciar o questionário
+  void _reiniciarQuestionario() {
+    setState(() {
+      _perguntaSelecionada = 0; // Reseta o índice da pergunta
+      _notaTotal = 0; // Reseta a pontuação total
+      _questionarioIniciado = false; // Reseta o estado do questionário
+    });
+  }
+
+  // Método para voltar para a pergunta anterior
+  void _anteriorPergunta() {
+    if (_perguntaSelecionada > 0) {
       setState(() {
-      _perguntaSelecionada++; // Incrementa o valor da variável '_perguntaSelecionada' ao chamar 'responder'
-      _notaTotal += nota;
+        _perguntaSelecionada--; // Volta uma pergunta
       });
     }
   }
 
-void _reiniciarQuestionario() {
-  setState(() {
-    _perguntaSelecionada = 0;
-    _notaTotal = 0;
-  });
-}
+  // Método para alternar entre o tema claro e escuro
+  void _alternarTema() {
+    setState(() {
+      _temaEscuro = !_temaEscuro; // Alterna o estado do tema
+    });
+  }
 
-bool get temPerguntaSelecionada {
-  return _perguntaSelecionada < _perguntas.length; // se pergunta for maior que tamanho da lista
-}
+  // Método para iniciar o questionário
+  void _iniciarQuestionario() {
+    setState(() {
+      _questionarioIniciado = true; // Define que o questionário foi iniciado
+    });
+  }
+
+  // Getter para verificar se há perguntas restantes
+  bool get temPerguntaSelecionada {
+    return _perguntaSelecionada < _perguntas.length;
+  }
+
   @override
-  Widget build(BuildContext context) { // O método build é obrigatório em um StatelessWidget, e é onde a interface do widget é definida
-
-
-
-    // Inicializa uma lista de Widgets chamada 'respostas' que irá armazenar os botões de resposta.
-    // for (String textoRespo in perguntas[_perguntaSelecionada]['respostas'] as List<String>) { 
-    /* O for itera sobre a lista 'respostas' do mapa 'perguntas'. 
-    O 'as List<String>' garante que o Dart saiba que 'respostas' é uma lista de strings. 
-    Para cada item na lista de respostas, será criada uma variável 'textoRespo', 
-    que representa cada resposta individualmente (ex: "Azul", "Vermelho", etc.). */
-    //widgets.add(Resposta(textoRespo, _responder)); 
-    /* Adiciona um widget Resposta para cada resposta na lista, 
-    passando o texto da resposta e a função '_responder' para tratar o clique. */ 
-    // }
-
-
-      return MaterialApp(  // Retorna o widget MaterialApp, que é o widget raiz da sua aplicação
-        home: Scaffold( // Scaffold fornece uma estrutura visual básica, como AppBar, Drawer, BottomNavigationBar, etc.
-          appBar: AppBar( // AppBar é a barra de título no topo da tela
-            title: Center(
-              child: Text(
-                'Questionario do Fefe',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold, // Aplica negrito ao texto
-                  fontSize: 20, // Ajuste o tamanho da fonte conforme necessário
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: _temaEscuro ? ThemeData.dark() : ThemeData.light(), // Define o tema com base no estado
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Questionário do Fefe', // Título da AppBar
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(_temaEscuro ? Icons.light_mode : Icons.dark_mode), // Ícone para alternar tema
+              onPressed: _alternarTema,
+            ),
+          ],
+        ),
+        body: _questionarioIniciado
+            ? temPerguntaSelecionada
+                ? Column(
+                    children: [
+                      Expanded(
+                        child: Questionario(
+                          perguntas: _perguntas, // Passa a lista de perguntas para o widget Questionario
+                          perguntaSelecionada: _perguntaSelecionada, // Passa o índice da pergunta atual
+                          quandoResponder: _responder, // Passa a função de resposta para o widget Questionario
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          if (_perguntaSelecionada > 0) // Verifica se há pergunta anterior
+                            IconButton(
+                              icon: const Icon(Icons.arrow_back), // Ícone para voltar
+                              onPressed: _anteriorPergunta,
+                            ),
+                          IconButton(
+                            icon: const Icon(Icons.arrow_forward), // Ícone para avançar
+                            onPressed: temPerguntaSelecionada
+                                ? () => _responder(0) // Avança para a próxima pergunta
+                                : null,
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                : Resultado(_notaTotal, _reiniciarQuestionario) // Mostra o resultado final
+            : Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Bem-vindo!', // Texto de boas-vindas
+                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      'Ao Quiz do Fefe', // Texto adicional
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: Colors.grey),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 133, 196, 133), // Cor de fundo do botão
+                        foregroundColor: Colors.black, // Cor do texto do botão
+                        elevation: 5, // Sombra do botão
+                        padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 50.0), // Espaçamento interno
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4), // Bordas arredondadas
+                        ),
+                      ),
+                      onPressed: _iniciarQuestionario, // Inicia o questionário ao pressionar
+                      child: const Text('Iniciar'),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            backgroundColor: const Color.fromARGB(255, 223, 183, 123), // Define a cor de fundo da AppBar.
-            elevation: 10, // Adiciona sombra ao AppBar
-          ),
-          backgroundColor: const Color(0xFFFFFAF0), // Define a cor de fundo do Scaffold
-          body: temPerguntaSelecionada 
-            ? Questionario(
-                perguntas: _perguntas, 
-                perguntaSelecionada: _perguntaSelecionada, 
-                quandoResponder: _responder,
-              )
-            : Resultado(
-                _notaTotal, 
-                _reiniciarQuestionario,
-              ),
-        ),
-      );
-
+      ),
+    );
   }
 }
-
-// Cria uma classe 'PerguntaApp' que é um StatefulWidget
-class PerguntaApp extends StatefulWidget {
-
-  @override
-  _PerguntaAppState createState() {
-    return _PerguntaAppState(); // Retorna uma nova instância da classe de estado associada a 'PerguntaApp'
-  }
-}
-
